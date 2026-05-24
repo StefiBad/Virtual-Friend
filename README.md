@@ -15,4 +15,4 @@ What can currently do this machine?
 To start the conversation, please type: ./run.sh
 If you don't yet have execute permissions, please type: chmod +x run.sh
 
-I hope you to like it! [NEW ACTIVITIES COMMING SOON...]
+I hope you like it! [NEW ACTIVITIES COMMING SOON...]
