@@ -1,7 +1,7 @@
 # Virtual-Friend
 Do you also need a social life? No problem! Here you go a virtual machine to chat.
 
-You can download this repository by typing in the terminal: git clone https://github.com/StefiBad/Virtual-Friend"
+You can download this repository by typing in the terminal: git clone "https://github.com/StefiBad/Virtual-Friend"
 To enter inside the directory, please type: cd Virtual-Friend
 
 Please, set your user name in "username.txt" file before starting to get a better experience.
