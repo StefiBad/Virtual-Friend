@@ -4,7 +4,6 @@
 name=$(cat username.txt)
 
 #Menu
-<<<<<<< HEAD
 menu="True"
 echo "Hi, $name! I'm your virtual friend. How can I help you today?"
 while [ "$menu" = "True" ]; do
@@ -16,7 +15,6 @@ echo "4. Exit"
 echo ""
 echo -n "Please, select an option (1-4): "
 read option
-<<<<<<< HEAD
 
 case $option in
 1) #Calculator
