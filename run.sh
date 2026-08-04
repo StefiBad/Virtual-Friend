@@ -50,7 +50,11 @@ echo "The result of multiplying $num1 and $num2 is $((num1 * num2))"
 4) #Division
 echo -n "Alright $name, type two numbers: "
 read num1 num2
+if [ $num2 -eq 0 ]; then
+echo "Hey! You cannot divide by zero"
+else
 echo "The result of dividing $num1 and $num2 is $((num1 / num2))"
+fi
 ;;
 5) #Module
 echo -n "Alright $name, type two numbers: "
