@@ -3,17 +3,40 @@
 #Name
 name=$(cat username.txt)
 
+#Set username
+if [ "$name" == "USERNAME" ]; then
+    echo "Hello! It seems you haven't set your username yet."
+    read -p "Do you want to set it now? (y/n): " reply
+    if [ "$reply" == "y" ]; then
+        read -p "Please, type your name: " name
+        echo "$name" > username.txt
+    else
+        echo "Ok, you can set it later."
+    fi
+fi
+
+#Set greeting
+current_hour=$(date +%H)
+if [ "$current_hour" -lt 12 ]; then
+    greeting="Good morning"
+elif [ "$current_hour" -lt 20 ]; then
+    greeting="Good afternoon"
+else
+    greeting="Good evening"
+fi
+
 #Menu
 menu="True"
-echo "Hi, $name! I'm your virtual friend. How can I help you today?"
+echo "$greeting, $name! I'm your virtual friend. How can I help you today?"
 while [ "$menu" = "True" ]; do
     echo "--MENU--"
     echo "1. Calculator"
     echo "2. Current date"
     echo "3. Games"
-    echo "4. Exit"
+    echo "4. Change username"
+    echo "5. Exit"
     echo ""
-    echo -n "Please, select an option (1-4): "
+    echo -n "Please, select an option (1-5): "
     read option
 
     case $option in
@@ -104,8 +127,18 @@ while [ "$menu" = "True" ]; do
                 esac
             done
             ;;
-        4) #Exit
-            echo "Bye! See you later!"
+        4) #Change username
+            read -p "Are you sure you want to change your username? (y/n): " reply
+            if [ "$reply" == "y" ]; then
+                read -p "Please, type your new name: " name
+                echo "$name" > username.txt
+                echo "Your username has been changed to $name."
+            else
+                echo "Ok, your username remains $name."
+            fi
+            ;;
+        5) #Exit
+            echo "Bye! See you later, $name!"
             menu="False"
             ;;
         *)
