@@ -1,54 +1,73 @@
 import random
+import sys
+import time
+
+
+def typewrite(text, end="\n"):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(0.03)
+    sys.stdout.write(end)
+    sys.stdout.flush()
+
 
 def play():
     choices = ["Rock", "Paper", "Scissors"]
-    print("Welcome to Rock, Paper, Scissors! Let's get started!\n")
+    typewrite("Welcome to Rock, Paper, Scissors! Let's get started!\n")
 
     while True:
-        print("Please, select a gun among Rock, Paper or Scissors:")
-        print("1. Rock\n2. Paper\n3. Scissors\n")
+        typewrite("Please, select a gun among Rock, Paper or Scissors:")
+        typewrite("1. Rock\n2. Paper\n3. Scissors\n")
 
         while True:
             try:
-                choice_idx = int(input("And your gun is (1-3): "))
+                typewrite("And your gun is (1-3): ", end="")
+                choice_idx = int(input())
                 if 1 <= choice_idx <= 3:
                     break
-                print("This gun does not exist! Please choose between 1 and 3.")
+                typewrite(
+                    "This gun does not exist! Please choose between 1 and 3."
+                )
             except ValueError:
-                print("Invalid input! Please enter a number (1, 2, or 3).")
+                typewrite(
+                    "Invalid input! Please enter a number (1, 2, or 3)."
+                )
 
         player = choices[choice_idx - 1]
         computer = random.choice(choices)
 
-        print(f"\nYou selected: {player}")
-        print(f"The computer has selected: {computer}\n")
+        typewrite(f"\nYou selected: {player}")
+        typewrite(f"The computer has selected: {computer}\n")
 
         if player == computer:
-            print("We got a tie! Try again!\n")
+            typewrite("We got a tie! Try again!\n")
         elif (
-            (player == "Rock" and computer == "Scissors") or
-            (player == "Paper" and computer == "Rock") or
-            (player == "Scissors" and computer == "Paper")
+            (player == "Rock" and computer == "Scissors")
+            or (player == "Paper" and computer == "Rock")
+            or (player == "Scissors" and computer == "Paper")
         ):
-            print("Congrats! You won!\n")
+            typewrite("Congrats! You won!\n")
         else:
-            print("Oh, no! You lose the game!\n")
+            typewrite("Oh, no! You lose the game!\n")
 
-        print("Would you like to play again?")
-        print("1. Yes\n2. No\n")
+        typewrite("Would you like to play again?")
+        typewrite("1. Yes\n2. No\n")
 
         while True:
             try:
-                ans = int(input("Please, answer (1-2): "))
+                typewrite("Please, answer (1-2): ", end="")
+                ans = int(input())
                 if ans == 1:
-                    print("\nNice! Let's start the next round...\n")
+                    typewrite("\nNice! Let's start the next round...\n")
                     break
                 elif ans == 2:
-                    print("\nNo problem! Thanks for playing with me!")
+                    typewrite("\nNo problem! Thanks for playing with me!")
                     return
                 else:
-                    print("Invalid option! Please select 1 or 2.")
+                    typewrite("Invalid option! Please select 1 or 2.")
             except ValueError:
-                print("Invalid input! Please enter 1 or 2.")
+                typewrite("Invalid input! Please enter 1 or 2.")
+
 
 play()
