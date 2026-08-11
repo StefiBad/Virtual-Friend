@@ -1,6 +1,13 @@
 #!/usr/bin/bash
 
-#Writing effect
+#Colors
+CYAN=$'\033[0;36m'
+YELLOW=$'\033[1;33m'
+GREEN=$'\033[0;32m'
+RED=$'\033[0;31m'
+PURPLE=$'\033[0;35m'
+RESET=$'\033[0m'
+
 #Writing effect
 typewrite() {
     newline=true
@@ -11,12 +18,12 @@ typewrite() {
 
     text="$1"
     for (( i=0; i<${#text}; i++ )); do
-        echo -n "${text:$i:1}"
+        echo -ne "${text:$i:1}"
         sleep 0.03
     done
 
     if [ "$newline" = true ]; then
-        echo ""
+        echo -e ""
     fi
 }
 
@@ -25,11 +32,11 @@ name=$(cat username.txt)
 
 #Set username
 if [ "$name" == "USERNAME" ]; then
-    typewrite "Hello! It seems you haven't set your username yet."
-    typewrite -n "Do you want to set it now? (y/n): "
+    typewrite "${CYAN}Hello! It seems you haven't set your username yet.${RESET}"
+    typewrite -n "${YELLOW}Do you want to set it now? (y/n): ${RESET}"
     read reply
     if [ "$reply" == "y" ]; then
-        typewrite -n "Please, type your name: "
+        typewrite -n "${YELLOW}Please, type your name: ${RESET}"
         read name
         echo "$name" > username.txt
     else
@@ -49,24 +56,24 @@ fi
 
 #Menu
 menu="True"
-typewrite "$greeting, $name! I'm your virtual friend. How can I help you today?"
+typewrite "${CYAN}$greeting, ${PURPLE}$name${CYAN}! I'm your virtual friend. How can I help you today?${RESET}"
 while [ "$menu" = "True" ]; do
-    typewrite "--MENU--"
+    typewrite "${CYAN}--MENU--${RESET}"
     typewrite "1. Calculator"
     typewrite "2. Current date"
     typewrite "3. Games"
     typewrite "4. Change username"
     typewrite "5. Exit"
     typewrite ""
-    typewrite -n "Please, select an option (1-5): "
+    typewrite -n "${YELLOW}Please, select an option (1-5): ${RESET}"
     read option
 
     case $option in
         1) #Calculator
             calc="True"
-            typewrite "Which operation symbol will you use?"
+            typewrite "${YELLOW}Which operation symbol will you use?${RESET}"
             while [ "$calc" = "True" ]; do
-                typewrite "--CALCULATOR--"
+                typewrite "${CYAN}--CALCULATOR--${RESET}"
                 typewrite "1. Addition"
                 typewrite "2. Subtraction"
                 typewrite "3. Multiplication"
@@ -74,62 +81,62 @@ while [ "$menu" = "True" ]; do
                 typewrite "5. Module"
                 typewrite "6. Exit"
                 typewrite ""
-                typewrite -n "Please, select an option (1-6): "
+                typewrite -n "${YELLOW}Please, select an option (1-6): ${RESET}"
                 read symbol
 
                 case $symbol in
                     1) #Addition
-                        typewrite -n "Alright $name, type two numbers: "
+                        typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
                         read num1 num2
-                        typewrite "The result of adding $num1 and $num2 is $((num1 + num2))"
+                        typewrite "${GREEN}The result of adding $num1 and $num2 is $((num1 + num2))${RESET}"
                         ;;
                     2) #Subtraction
-                        typewrite -n "Alright $name, type two numbers: "
+                        typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
                         read num1 num2
-                        typewrite "The result of subtracting $num1 and $num2 is $((num1 - num2))"
+                        typewrite "${GREEN}The result of subtracting $num1 and $num2 is $((num1 - num2))${RESET}"
                         ;;
                     3) #Multiplication
-                        typewrite -n "Alright $name, type two numbers: "
+                        typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
                         read num1 num2
-                        typewrite "The result of multiplying $num1 and $num2 is $((num1 * num2))"
+                        typewrite "${GREEN}The result of multiplying $num1 and $num2 is $((num1 * num2))${RESET}"
                         ;;
                     4) #Division
-                        typewrite -n "Alright $name, type two numbers: "
+                        typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
                         read num1 num2
                         if [ $num2 -eq 0 ]; then
-                            typewrite "Hey! You cannot divide by zero"
+                            typewrite "${RED}Hey! You cannot divide by zero${RESET}"
                         else
-                            typewrite "The result of dividing $num1 and $num2 is $((num1 / num2))"
+                            typewrite "${GREEN}The result of dividing $num1 and $num2 is $((num1 / num2))${RESET}"
                         fi
                         ;;
                     5) #Module
-                        typewrite -n "Alright $name, type two numbers: "
+                        typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
                         read num1 num2
-                        typewrite "The module of $num1 and $num2 is $((num1 % num2))"
+                        typewrite "${GREEN}The module of $num1 and $num2 is $((num1 % num2))${RESET}"
                         ;;
                     6) #Exit
                         typewrite "Calculator closed."
                         calc="False"
                         ;;
                     *)
-                        typewrite "Invalid option!"
+                        typewrite "${RED}Invalid option!${RESET}"
                         ;;
                 esac
             done
             ;;
         2) #Current date
-            typewrite "The current day is: $(date)"
+            typewrite "${GREEN}The current day is: $(date)${RESET}"
             ;;
         3) #Games
             game="True"
-            typewrite "Ok, $name! What do you want to play?"
+            typewrite "Ok, ${PURPLE}$name${RESET}! What do you want to play?"
             while [ "$game" = "True" ]; do
-                typewrite "--GAMES--"
+                typewrite "${CYAN}--GAMES--${RESET}"
                 typewrite "1. Guess the number"
                 typewrite "2. Rock, Paper, Scissors"
                 typewrite "3. Exit"
                 typewrite ""
-                typewrite -n "Choose a game: "
+                typewrite -n "${YELLOW}Choose a game: ${RESET}"
                 read option
 
                 case $option in
@@ -144,29 +151,29 @@ while [ "$menu" = "True" ]; do
                         game="False"
                         ;;
                     *)
-                        typewrite "Invalid option!"
+                        typewrite "${RED}Invalid option!${RESET}"
                         ;;
                 esac
             done
             ;;
         4) #Change username
-            typewrite -n "Are you sure you want to change your username? (y/n): "
+            typewrite -n "${YELLOW}Are you sure you want to change your username? (y/n): ${RESET}"
             read reply
             if [ "$reply" == "y" ]; then
-                typewrite -n "Please, type your new name: "
+                typewrite -n "${YELLOW}Please, type your new name: ${RESET}"
                 read name
                 echo "$name" > username.txt
-                typewrite "Your username has been changed to $name."
+                typewrite "${GREEN}Your username has been changed to ${PURPLE}$name${GREEN}.${RESET}"
             else
-                typewrite "Ok, your username remains $name."
+                typewrite "Ok, your username remains ${PURPLE}$name${RESET}."
             fi
             ;;
         5) #Exit
-            typewrite "Bye! See you later, $name!"
+            typewrite "${CYAN}Bye! See you later, ${PURPLE}$name${CYAN}!${RESET}"
             menu="False"
             ;;
         *)
-            typewrite "Invalid option... Please, try again!"
+            typewrite "${RED}Invalid option... Please, try again!${RESET}"
             ;;
     esac
 done
