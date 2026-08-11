@@ -125,7 +125,7 @@ while [ "$menu" = "True" ]; do
             done
             ;;
         2) #Current date
-            typewrite "${GREEN}The current day is: $(date)${RESET}"
+            typewrite "${GREEN}The current date is: ${PURPLE}$(date +"%B %d, %Y - %I:%M %p") ${GREEN}Have a nice day, ${PURPLE}$name${GREEN}!${RESET}"
             ;;
         3) #Games
             game="True"
