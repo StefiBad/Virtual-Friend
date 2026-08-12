@@ -12,6 +12,7 @@ Do you also need a social life? No problem! Here you go a virtual machine for ch
 2. Find the current date
 3. Play games with you :)
 4. Change your user name
+5. Manage quick notes!
 
 ## Extra
 - I recommend using any Linux OS or WSL environment if you prefer Windows.
