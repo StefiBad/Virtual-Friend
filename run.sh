@@ -27,6 +27,15 @@ typewrite() {
     fi
 }
 
+#Writing effect with pause
+typewrite_pause() {
+    prompt_text="${1:-Press Enter to continue...}"
+    typewrite -n "$prompt_text"
+    read -r
+}
+
+clear
+
 #Name
 name=$(cat username.txt)
 
@@ -41,6 +50,7 @@ if [ "$name" == "USERNAME" ]; then
         echo "$name" > username.txt
     else
         typewrite "Ok, you can set it later."
+        sleep 1
     fi
 fi
 
@@ -56,8 +66,8 @@ fi
 
 #Menu
 menu="True"
-typewrite "${CYAN}$greeting, ${PURPLE}$name${CYAN}! I'm your virtual friend. How can I help you today?${RESET}"
 while [ "$menu" = "True" ]; do
+    clear
     typewrite "${CYAN}--MENU--${RESET}"
     typewrite "1. Calculator"
     typewrite "2. Current date"
@@ -66,14 +76,14 @@ while [ "$menu" = "True" ]; do
     typewrite "5. Quick notes"
     typewrite "6. Exit"
     typewrite ""
-    typewrite -n "${YELLOW}Please, select an option (1-6): ${RESET}"
+    typewrite -n "${YELLOW}$greeting, ${PURPLE}$name${YELLOW}! How can I help you today? (1-6): ${RESET}"
     read option
 
     case $option in
         1) #Calculator
             calc="True"
-            typewrite "${YELLOW}Which operation symbol will you use?${RESET}"
             while [ "$calc" = "True" ]; do
+                clear
                 typewrite "${CYAN}--CALCULATOR--${RESET}"
                 typewrite "1. Addition"
                 typewrite "2. Subtraction"
@@ -82,7 +92,7 @@ while [ "$menu" = "True" ]; do
                 typewrite "5. Module"
                 typewrite "6. Exit"
                 typewrite ""
-                typewrite -n "${YELLOW}Please, select an option (1-6): ${RESET}"
+                typewrite -n "${YELLOW}Which operation symbol will you use? (1-6): ${RESET}"
                 read symbol
 
                 case $symbol in
@@ -90,16 +100,22 @@ while [ "$menu" = "True" ]; do
                         typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
                         read num1 num2
                         typewrite "${GREEN}The result of adding $num1 and $num2 is $((num1 + num2))${RESET}"
+                        typewrite ""
+                        typewrite_pause
                         ;;
                     2) #Subtraction
                         typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
                         read num1 num2
                         typewrite "${GREEN}The result of subtracting $num1 and $num2 is $((num1 - num2))${RESET}"
+                        typewrite ""
+                        typewrite_pause
                         ;;
                     3) #Multiplication
                         typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
                         read num1 num2
                         typewrite "${GREEN}The result of multiplying $num1 and $num2 is $((num1 * num2))${RESET}"
+                        typewrite ""
+                        typewrite_pause
                         ;;
                     4) #Division
                         typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
@@ -109,55 +125,73 @@ while [ "$menu" = "True" ]; do
                         else
                             typewrite "${GREEN}The result of dividing $num1 and $num2 is $((num1 / num2))${RESET}"
                         fi
+                        typewrite ""
+                        typewrite_pause
                         ;;
                     5) #Module
                         typewrite -n "${YELLOW}Alright ${PURPLE}$name${YELLOW}, type two numbers: ${RESET}"
                         read num1 num2
                         typewrite "${GREEN}The module of $num1 and $num2 is $((num1 % num2))${RESET}"
+                        typewrite ""
+                        typewrite_pause
                         ;;
                     6) #Exit
-                        typewrite "Calculator closed."
+                        typewrite "Closing Calculator..."
+                        sleep 1
                         calc="False"
                         ;;
                     *)
                         typewrite "${RED}Invalid option!${RESET}"
+                        sleep 1
                         ;;
                 esac
             done
             ;;
         2) #Current date
+            clear
             typewrite "${GREEN}The current date is: ${PURPLE}$(date +"%B %d, %Y - %I:%M %p") ${GREEN}Have a nice day, ${PURPLE}$name${GREEN}!${RESET}"
+            typewrite ""
+            typewrite_pause
             ;;
         3) #Games
             game="True"
-            typewrite "Ok, ${PURPLE}$name${RESET}! What do you want to play?"
             while [ "$game" = "True" ]; do
+                clear
                 typewrite "${CYAN}--GAMES--${RESET}"
                 typewrite "1. Guess the number"
                 typewrite "2. Rock, Paper, Scissors"
                 typewrite "3. Exit"
                 typewrite ""
-                typewrite -n "${YELLOW}Choose a game: ${RESET}"
+                typewrite -n "${YELLOW}Ok, ${PURPLE}$name${YELLOW}! What do you want to play? (1-3): ${RESET}"
                 read option
 
                 case $option in
                     1) #Guess the number
+                        clear
                         python3 gtn_game.py
+                        typewrite ""
+                        typewrite_pause
                         ;;
                     2) #Rock, Paper, Scissors
+                        clear
                         python3 rps_game.py
+                        typewrite ""
+                        typewrite_pause
                         ;;
                     3) #Exit
-                        typewrite "Games closed"
+                        typewrite "Closing Games..."
+                        sleep 1
                         game="False"
                         ;;
                     *)
                         typewrite "${RED}Invalid option!${RESET}"
+                        sleep 1
                         ;;
                 esac
             done
             ;;
         4) #Change username
+            clear
             typewrite -n "${YELLOW}Are you sure you want to change your username? (y/n): ${RESET}"
             read reply
             if [ "$reply" == "y" ]; then
@@ -165,14 +199,16 @@ while [ "$menu" = "True" ]; do
                 read name
                 echo "$name" > username.txt
                 typewrite "${GREEN}Your username has been changed to ${PURPLE}$name${GREEN}.${RESET}"
+                sleep 1
             else
                 typewrite "Ok, your username remains ${PURPLE}$name${RESET}."
+                sleep 1
             fi
             ;;
         5) #Quick notes
             notes="True"
-            typewrite "Welcome to your quick notes manager, ${PURPLE}$name${RESET}!"
             while [ "$notes" = "True" ]; do
+                clear
                 typewrite "${CYAN}--QUICK NOTES--${RESET}"
                 typewrite "1. Add note"
                 typewrite "2. Show current notes"
@@ -180,7 +216,7 @@ while [ "$menu" = "True" ]; do
                 typewrite "4. Delete notes"
                 typewrite "5. Exit"
                 typewrite ""
-                typewrite -n "${YELLOW}Please, select an option (1-5): ${RESET}"
+                typewrite -n "${YELLOW}Welcome, ${PURPLE}$name${YELLOW}! What would you like to do with your notes? (1-5): ${RESET}"
                 read notes_option
 
                 case $notes_option in
@@ -190,6 +226,7 @@ while [ "$menu" = "True" ]; do
                         timestamp=$(date +"%B %d, %Y - %I:%M %p")
                         echo "[$timestamp] $new_note" >> notes.txt
                         typewrite "${GREEN}Note added successfully!${RESET}"
+                        sleep 1
                         ;;
                     2) #Show current notes
                         if [ -s notes.txt ]; then
@@ -200,12 +237,15 @@ while [ "$menu" = "True" ]; do
                         else
                             typewrite "${RED}You don't have any notes stored yet!${RESET}"
                         fi
+                        typewrite ""
+                        typewrite_pause
                         ;;
                     3) #Rewrite current notes
                         typewrite -n "${YELLOW}Warning: This will overwrite all existing notes. Are you sure you want to continue? (y/n): ${RESET}"
                         read confirm
                         if [ "$confirm" != "y" ]; then
                             typewrite "Operation cancelled. Your notes remain intact."
+                            sleep 1
                             continue
                         fi
                         typewrite -n "${YELLOW}Type the new content: ${RESET}"
@@ -213,6 +253,7 @@ while [ "$menu" = "True" ]; do
                         timestamp=$(date +"%B %d, %Y - %I:%M %p")
                         echo "[$timestamp] $rewritten_note" > notes.txt
                         typewrite "${GREEN}Notes rewritten successfully!${RESET}"
+                        sleep 1
                         ;;
                     4) #Delete notes
                         typewrite -n "${YELLOW}Are you sure you want to delete all notes? (y/n): ${RESET}"
@@ -220,26 +261,34 @@ while [ "$menu" = "True" ]; do
                         if [ "$confirm" == "y" ]; then
                             > notes.txt
                             typewrite "${GREEN}All notes have been deleted!${RESET}"
+                            sleep 1
                         else
                             typewrite "Operation cancelled. Your notes remain intact."
+                            sleep 1
                         fi
                         ;;
                     5) #Exit
-                        typewrite "Quick notes closed."
+                        typewrite "Closing Quick notes..."
+                        sleep 1
                         notes="False"
                         ;;
                     *)
                         typewrite "${RED}Invalid option!${RESET}"
+                        sleep 1
                         ;;
                 esac
             done
             ;;
         6) #Exit
+            clear
             typewrite "${CYAN}Bye! See you later, ${PURPLE}$name${CYAN}!${RESET}"
+            sleep 1
+            clear
             menu="False"
             ;;
         *)
             typewrite "${RED}Invalid option... Please, try again!${RESET}"
+            sleep 1
             ;;
     esac
 done
