@@ -63,9 +63,10 @@ while [ "$menu" = "True" ]; do
     typewrite "2. Current date"
     typewrite "3. Games"
     typewrite "4. Change username"
-    typewrite "5. Exit"
+    typewrite "5. Quick notes"
+    typewrite "6. Exit"
     typewrite ""
-    typewrite -n "${YELLOW}Please, select an option (1-5): ${RESET}"
+    typewrite -n "${YELLOW}Please, select an option (1-6): ${RESET}"
     read option
 
     case $option in
@@ -168,7 +169,72 @@ while [ "$menu" = "True" ]; do
                 typewrite "Ok, your username remains ${PURPLE}$name${RESET}."
             fi
             ;;
-        5) #Exit
+        5) #Quick notes
+            notes="True"
+            typewrite "Welcome to your quick notes manager, ${PURPLE}$name${RESET}!"
+            while [ "$notes" = "True" ]; do
+                typewrite "${CYAN}--QUICK NOTES--${RESET}"
+                typewrite "1. Add note"
+                typewrite "2. Show current notes"
+                typewrite "3. Rewrite current notes"
+                typewrite "4. Delete notes"
+                typewrite "5. Exit"
+                typewrite ""
+                typewrite -n "${YELLOW}Please, select an option (1-5): ${RESET}"
+                read notes_option
+
+                case $notes_option in
+                    1) #Add note
+                        typewrite -n "${YELLOW}Type your new note: ${RESET}"
+                        read new_note
+                        timestamp=$(date +"%B %d, %Y - %I:%M %p")
+                        echo "[$timestamp] $new_note" >> notes.txt
+                        typewrite "${GREEN}Note added successfully!${RESET}"
+                        ;;
+                    2) #Show current notes
+                        if [ -s notes.txt ]; then
+                            typewrite "${CYAN}--YOUR NOTES--${RESET}"
+                            while IFS= read -r line; do
+                                typewrite "$line"
+                            done < notes.txt
+                        else
+                            typewrite "${RED}You don't have any notes stored yet!${RESET}"
+                        fi
+                        ;;
+                    3) #Rewrite current notes
+                        typewrite -n "${YELLOW}Warning: This will overwrite all existing notes. Are you sure you want to continue? (y/n): ${RESET}"
+                        read confirm
+                        if [ "$confirm" != "y" ]; then
+                            typewrite "Operation cancelled. Your notes remain intact."
+                            continue
+                        fi
+                        typewrite -n "${YELLOW}Type the new content: ${RESET}"
+                        read rewritten_note
+                        timestamp=$(date +"%B %d, %Y - %I:%M %p")
+                        echo "[$timestamp] $rewritten_note" > notes.txt
+                        typewrite "${GREEN}Notes rewritten successfully!${RESET}"
+                        ;;
+                    4) #Delete notes
+                        typewrite -n "${YELLOW}Are you sure you want to delete all notes? (y/n): ${RESET}"
+                        read confirm
+                        if [ "$confirm" == "y" ]; then
+                            > notes.txt
+                            typewrite "${GREEN}All notes have been deleted!${RESET}"
+                        else
+                            typewrite "Operation cancelled. Your notes remain intact."
+                        fi
+                        ;;
+                    5) #Exit
+                        typewrite "Quick notes closed."
+                        notes="False"
+                        ;;
+                    *)
+                        typewrite "${RED}Invalid option!${RESET}"
+                        ;;
+                esac
+            done
+            ;;
+        6) #Exit
             typewrite "${CYAN}Bye! See you later, ${PURPLE}$name${CYAN}!${RESET}"
             menu="False"
             ;;
